@@ -93,11 +93,11 @@ def main(
     correct = 0
     miss = 0.001
     output_data = []
-    pbar = tqdm(total=total)
+    pbar = tqdm(total=total, disable=True) # disable by derui
     for idx, data in enumerate(dataset):
         instruction = data.get('instruction')
 
-        outputs = evaluate(instruction)
+        outputs = evaluate(instruction, do_sample=True) # set do_sample=true to enable sampling by Derui
         label = data.get('answer')
         flag = False
         if args.dataset.lower() in ['aqua']:
