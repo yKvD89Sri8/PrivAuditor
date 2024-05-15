@@ -4,3 +4,5 @@ __pycache__
 dataset/*
 trained_models/*
 ft-training_set/*
+experiment/*
+*.out
