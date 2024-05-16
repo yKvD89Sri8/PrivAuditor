@@ -27,9 +27,9 @@ create_dir(save_dir)
 data_list = []
 for sample in yelp_train:
     data_list.append({
-        "instruction": "Please rate the review: ",
+        "instruction": "I am sharing a review with you. Based on the text in the review, you need to rate the review in one of the following 5 numerical number: 1 or 2 or 3 or 4 or 5. 1 being the lowest and 5 being the highest. \n\n",
         "input": sample["text"],
-        "output": sample["label"],
+        "output": "rate: "+str(sample["label"]),
         "answer": sample["label"],
     })
 random.shuffle(data_list)
@@ -41,9 +41,9 @@ del data_list
 data_list = []
 for sample in yelp_test:
     data_list.append({
-        "instruction": "Please rate the review: ",
+        "instruction": "I am sharing a review with you. Based on the text in the review, you need to rate the review in one of the following 5 numerical number: 1 or 2 or 3 or 4 or 5. 1 being the lowest and 5 being the highest. \n\n",
         "input": sample["text"],
-        "output": sample["label"],
+        "output": "rate: "+str(sample["label"]),
         "answer": sample["label"],
     })
 writer(data_list, save_dir, "test")
