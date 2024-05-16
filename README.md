@@ -16,7 +16,7 @@ limitations under the License.
 
 <h1 align="center"> 
 <img src="picture.jpg" width="73" height="114">
-<p> LLM-Adapters</p>
+<p> LLM-LeakageAuditor</p>
 </h1>
 
 <h3 align="center">
