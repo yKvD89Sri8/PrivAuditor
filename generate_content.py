@@ -89,6 +89,10 @@ def main(
 
     dataset = load_data(args)
     tokenizer, model = load_model(args)
+    
+    if args.adapter == 'Prefix':
+        model.config.use_cache = True
+        
     total = len(dataset)
     output_data = []
     pbar = tqdm(total=total, disable=True) # disable by derui
