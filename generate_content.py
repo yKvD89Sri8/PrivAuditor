@@ -65,7 +65,7 @@ def main(
             )
         s = generation_output.sequences[0]
         output = tokenizer.decode(s)
-        return output.split("### Response:")[1].strip()
+        return output.split("### Response:")[-1].strip()
 
     """
     # testing code for readme
@@ -90,8 +90,6 @@ def main(
     dataset = load_data(args)
     tokenizer, model = load_model(args)
     total = len(dataset)
-    correct = 0
-    miss = 0.001
     output_data = []
     pbar = tqdm(total=total, disable=True) # disable by derui
     for idx, data in enumerate(dataset):
