@@ -96,17 +96,18 @@ def main(
     pbar = tqdm(total=total, disable=True) # disable by derui
     for idx, data in enumerate(dataset):
         instruction = data.get('instruction')
+        input = data.get('input')
 
-        outputs = evaluate(instruction, do_sample=True) # set do_sample=true to enable sampling by Derui
-        
-        flag = False
-        
+        outputs = evaluate(instruction, input, do_sample=True) # set do_sample=true to enable sampling by Derui
+                
         new_data = copy.deepcopy(data)
         new_data['output_pred'] = outputs
         output_data.append(new_data)
         print(' ')
         print('---------------')
-        print(outputs)
+        print('instruction: {}\n'.format(instruction))
+        print('input: {}\n'.format(input))
+        print('generation: {}\n'.format(outputs))
         print('---------------')
         print(f'\rgeneration:{idx + 1}/{total}')
         with open(save_file, 'w+') as f:
