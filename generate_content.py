@@ -91,7 +91,7 @@ def main(
     tokenizer, model = load_model(args)
     
     if args.adapter == 'Prefix':
-        model.config.use_cache = True
+        model.config.use_cache = False
         
     total = len(dataset)
     output_data = []
