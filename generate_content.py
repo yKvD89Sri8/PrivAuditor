@@ -61,7 +61,7 @@ def main(
                 return_dict_in_generate=True,
                 output_scores=True,
                 max_new_tokens=max_new_tokens,
-                use_cache=False,
+                use_cache=model.config.use_cache,
             )
         s = generation_output.sequences[0]
         output = tokenizer.decode(s)
