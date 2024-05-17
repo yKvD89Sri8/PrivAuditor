@@ -100,7 +100,7 @@ def main(
         instruction = data.get('instruction')
         input = data.get('input')
 
-        outputs = evaluate(instruction, input, do_sample=True) # set do_sample=true to enable sampling by Derui
+        outputs = evaluate(instruction, input) # set do_sample=true to enable sampling by Derui
                 
         new_data = copy.deepcopy(data)
         new_data['output_pred'] = outputs
