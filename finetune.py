@@ -304,8 +304,6 @@ def train(
     )
 
     model.config.use_cache = False
-    if adapter_name == "prefix-tuning":
-        model.config.use_cache = True
 
     old_state_dict = model.state_dict
     model.state_dict = (

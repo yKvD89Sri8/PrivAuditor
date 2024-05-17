@@ -97,7 +97,7 @@ def main(
     for idx, data in enumerate(dataset):
         instruction = data.get('instruction')
 
-        outputs = evaluate(instruction, do_sample=True) # set do_sample=true to enable sampling by Derui
+        outputs = evaluate(instruction)
         label = data.get('answer')
         flag = False
         if args.dataset.lower() in ['aqua']:
