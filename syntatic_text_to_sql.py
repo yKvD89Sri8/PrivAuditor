@@ -44,7 +44,7 @@ text_to_sql_ds_test_val = text_to_sql_ds_test_val.train_test_split(train_size=0.
 text_to_sql_ds_test = text_to_sql_ds_test_val["train"]
 text_to_sql_ds_val = text_to_sql_ds_test_val["test"]
 
-save_dir = "dataset/subject-finance-instruct-177k"
+save_dir = "dataset/syntatic_text_to_sql"
 
 create_dir(save_dir)
 
