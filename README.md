@@ -34,12 +34,9 @@ Supported Adapters:
 4. Parallel: [TOWARDS A UNIFIED VIEW OF PARAMETER-EFFICIENT TRANSFER LEARNING](https://arxiv.org/pdf/2110.04366.pdf)
 5. Prefix Tuning: [Prefix-Tuning: Optimizing Continuous Prompts for Generation](https://aclanthology.org/2021.acl-long.353/), [P-Tuning v2: Prompt Tuning Can Be Comparable to Fine-tuning Universally Across Scales and Tasks](https://arxiv.org/pdf/2110.07602.pdf)
 6. P-Tuning: [GPT Understands, Too](https://arxiv.org/pdf/2103.10385.pdf)
-7. Prompt Tuning: [The Power of Scale for Parameter-Efficient Prompt Tuning](https://arxiv.org/pdf/2104.08691.pdf) 
-
-## Latest News 🔥🔥
-
-## Special Announcement
-The `math_10k.json` data is collected with the training sets of GSM8K, MAWPS, and AQuA(1000 examples). However, MAWPS consists of AddSub, MultiArith, SingleOp, SingleEq, SimulEq-S, SimulEq-L. Thus, we can't utilize MultiArith, AddSub, and SingleEq as evaluation benchmarks with models trained with `math_10k.json`. We evaluate the PEFT methods on the MAWPS test set instead, and the result table has been updated (The findings in the paper are consistent). Furthermore, two variations of `math_10k.json` have been uploaded, `math_7K.json` where the MAWPS samples have been deleted, and `math_14k.json` where the MAWPS samples have been deleted as well and we combine ChatGPT and GPT-4 rationales. Sincerely apologize for any inconvenience!
+7. Prompt Tuning: [The Power of Scale for Parameter-Efficient Prompt Tuning](https://arxiv.org/pdf/2104.08691.pdf)
+8. In-Context Learning: [Few-shot Fine-tuning vs. In-context Learning:
+A Fair Comparison and Evaluation](https://arxiv.org/pdf/2305.16938)
 
 ## Setup
 
@@ -71,7 +68,7 @@ Example usage for multiple GPUs:
 ```bash
 WORLD_SIZE=2 CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node=2 --master_port=3192 finetune.py \
   --base_model 'yahma/llama-7b-hf' \
-  --data_path 'math_10k.json' \
+  --data_path 'math_10k.json' Can you please provide me with access to this document?
   --output_dir './trained_models/llama-lora' \
   --batch_size 16 \
   --micro_batch_size 4 \
