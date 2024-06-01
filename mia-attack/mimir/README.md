@@ -1,14 +1,28 @@
-# MIAs
+# MIMIR
 
-MIAs - Membership Inference Attacks in LLMs.
+![MIMIR logo](assets/logo.png)
+
+MIMIR - Python package for measuring memorization in LLMs.
 
 Documentation is available [here](https://iamgroot42.github.io/mimir.github.io).
+
+[![Tests](https://github.com/iamgroot42/mimir/actions/workflows/test.yml/badge.svg)](https://github.com/iamgroot42/mimir/actions/workflows/test.yml)
 [![Documentation](https://github.com/iamgroot42/mimir/actions/workflows/documentation.yml/badge.svg)](https://github.com/iamgroot42/mimir/actions/workflows/documentation.yml)
 
 ## Instructions
 
+First install the python dependencies
+```
+pip install -r requirements.txt
+```
 
-Run the scripts in `scripts/bash`
+Then, install our package
+
+```
+pip install -e .
+```
+
+To use, run the scripts in `scripts/bash`
 
 **Note: Intermediate results are saved in `tmp_results/` and `tmp_results_cross/` for bash scripts. If your experiment completes successfully, the results will be moved into the `results/` and `results_cross/` directory.**
 
@@ -52,3 +66,16 @@ To add an attack, create a file for your attack (e.g. `attacks/my_attack.py`) an
 Then, add a name for your attack to the dictionary in `attacks/utils.py`.
 
 If you would like to submit your attack to the repository, please open a pull request describing your attack and the paper it is based on.
+
+## Citation
+
+If you use MIMIR in your research, please cite our paper:
+
+```bibtex
+@article{duan2024membership,
+      title={Do Membership Inference Attacks Work on Large Language Models?}, 
+      author={Michael Duan and Anshuman Suri and Niloofar Mireshghallah and Sewon Min and Weijia Shi and Luke Zettlemoyer and Yulia Tsvetkov and Yejin Choi and David Evans and Hannaneh Hajishirzi},
+      year={2024},
+      journal={arXiv:2402.07841},
+}
+```

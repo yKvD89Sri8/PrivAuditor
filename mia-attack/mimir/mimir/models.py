@@ -38,7 +38,8 @@ class Model(nn.Module):
         """
             Shift model to a particular device.
         """
-        self.model.to(device, non_blocking=True)
+        #self.model.to(device, non_blocking=True) comment by derui
+        self.model.to(device)
 
     def load(self):
         """

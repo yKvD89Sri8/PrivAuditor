@@ -1,10 +1,7 @@
+# Igonore the local
+local
 # Ignore all caching folders
-cache/
-local/
-data/
-docs/
-assets/
-requirements*
+*cache/
 */__pycache__/
 *cache_dir/
 
