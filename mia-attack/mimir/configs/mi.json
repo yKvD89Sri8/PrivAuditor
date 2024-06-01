@@ -1,8 +1,8 @@
 {
     "experiment_name": "test_experiment",
-    "base_model": "EleutherAI/gpt-neo-125m",
-    "dataset_member": "/home/zhuderui/projects/llm_finetuning_privacy_benchmark/dataset/climate_change_claims/test.json",
-    "dataset_nonmember": "/home/zhuderui/projects/llm_finetuning_privacy_benchmark/dataset/climate_change_claims/val.json",
+    "base_model": "/home/stud/bcui/bhome/Documents/projects/llm_finetuning_privacy_benchmark/trained_models/full_model",
+    "dataset_member": "/home/stud/bcui/bhome/Documents/projects/llm_finetuning_privacy_benchmark/dataset/climate_change_claims/test.json",
+    "dataset_nonmember": "/home/stud/bcui/bhome/Documents/projects/llm_finetuning_privacy_benchmark/dataset/climate_change_claims/val.json",
     "dataset_key": "input",
     "min_words": 100,
     "max_words": 200,
