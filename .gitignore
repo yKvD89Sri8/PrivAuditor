@@ -6,3 +6,5 @@ trained_models/*
 ft-training_set/*
 experiment/*
 *.out
+results_new
+.vscode

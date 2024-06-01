@@ -71,12 +71,13 @@ def load_cached(cache_dir,
                     split = split.rsplit("_truncated", 1)[0]
 
                 # Load corresponding dataset
-                ds = datasets.load_dataset("iamgroot42/mimir", name=source, split=split)
+                # structure of ds: Dataset({features: ['member', 'nonmember', 'member_neighbors', 'nonmember_neighbors'], num_rows: numerical_number})
+                ds = datasets.load_dataset("iamgroot42/mimir", name=source, split=split) 
                 data = ds[data_split]
                 # Check if the number of samples is correct
                 if len(data) != n_samples:
                     raise ValueError(f"Requested {n_samples} samples, but only {len(data)} samples available. Potential mismatch in HuggingFace data and requested data.")
-                return data
+                return data # the return is a list of sequence, ["sequence1", "sequence2", ...] 
         # If got here, matching source was not found
         raise ValueError(f"Requested source {filename} not found in HuggingFace data.")
     else:
@@ -88,6 +89,7 @@ def load_cached(cache_dir,
 
 
 def load_data(file_path):
+    
     """
         Load data from a given filepath (.jsonl)
     """

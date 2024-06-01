@@ -14,8 +14,6 @@ from typing import List, Dict
 from simple_parsing import ArgumentParser
 from pathlib import Path
 
-import random
-
 from mimir.config import (
     ExperimentConfig,
     EnvironmentConfig,
@@ -412,33 +410,6 @@ def generate_data(
     return data_obj, data
     # return generate_samples(data[:n_samples], batch_size=batch_size)
 
-# write by derui
-def generate_data_derui(
-    dataset_with_path: str,
-    train: bool = True,
-    presampled: str = None,
-    specific_source: str = None,
-    mask_model_tokenizer = None,
-    load_from_hf: bool = False,
-    dataset_key: str = "text",
-    num_samples: int = 100,
-):
-    data_obj = data_utils.Data(dataset_with_path, config=config, presampled=presampled)
-    
-    data = []
-    with open(dataset_with_path, "r") as f:
-        ds = json.load(f)
-        for one_data_point in ds:
-            data.append(one_data_point[dataset_key])
-    
-    """data = data_obj.load(
-        train=train,
-        mask_tokenizer=mask_model_tokenizer,
-        specific_source=specific_source,
-    )"""
-    random.shuffle(data)
-    
-    return data_obj, data[:num_samples]
 
 def main(config: ExperimentConfig):
     env_config: EnvironmentConfig = config.env_config
@@ -530,24 +501,8 @@ def main(config: ExperimentConfig):
     base_model.load()
 
     print(f"Loading dataset {config.dataset_nonmember}...")
-    data_obj_nonmem, data_nonmember = generate_data_derui(
-        config.dataset_nonmember,
-        presampled=config.presampled_dataset_nonmember,
-        mask_model_tokenizer=mask_model.tokenizer if mask_model else None,
-        load_from_hf=config.load_from_hf,
-        dataset_key=config.dataset_key,
-        num_samples=config.n_samples,
-    )
-    data_obj_mem, data_member = generate_data_derui(
-        config.dataset_member,
-        presampled=config.presampled_dataset_member,
-        mask_model_tokenizer=mask_model.tokenizer if mask_model else None,
-        load_from_hf=config.load_from_hf,
-        dataset_key=config.dataset_key,
-        num_samples=config.n_samples,
-    )
     # data, seq_lens, n_samples = generate_data(config.dataset_member)
-    """data_obj_nonmem, data_nonmember = generate_data(
+    data_obj_nonmem, data_nonmember = generate_data(
         config.dataset_nonmember,
         train=False,
         presampled=config.presampled_dataset_nonmember,
@@ -558,8 +513,7 @@ def main(config: ExperimentConfig):
         config.dataset_member,
         presampled=config.presampled_dataset_member,
         mask_model_tokenizer=mask_model.tokenizer if mask_model else None,
-    )"""
-    
+    )
 
     other_objs, other_nonmembers = None, None
     if config.dataset_nonmember_other_sources is not None:
