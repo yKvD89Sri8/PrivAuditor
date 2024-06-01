@@ -272,6 +272,8 @@ def train(
         model.is_parallelizable = True
         model.model_parallel = True
 
+    print("save_steps={}".format(save_step))
+    
     trainer = transformers.Trainer(
         model=model,
         train_dataset=train_data,
