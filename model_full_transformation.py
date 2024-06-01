@@ -2,7 +2,10 @@ import fire
 import gradio as gr
 import torch
 import transformers
-from peft import PeftModel
+import os
+import sys
+sys.path.append(os.path.join(os.getcwd(), "peft/src/"))
+from peft import PeftModel, get_peft_model
 from transformers import GenerationConfig, LlamaForCausalLM, LlamaTokenizer
 import os
 
@@ -32,6 +35,8 @@ def main(
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
+    tokenizer = LlamaTokenizer.from_pretrained(base_model)
+    
     if device == "cuda":
         model = LlamaForCausalLM.from_pretrained(
             base_model,
