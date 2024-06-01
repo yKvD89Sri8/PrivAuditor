@@ -1,4 +1,4 @@
-CUDA_VISIBLE_DEVICES=0 python finetune.py \
+CUDA_VISIBLE_DEVICES=5 python finetune.py \
   --base_model 'EleutherAI/gpt-neo-125m' \
   --data_path 'ft-training_set/math_10k.json' \
   --output_dir './trained_models/gpt-neo-125m-lora' \
@@ -8,6 +8,7 @@ CUDA_VISIBLE_DEVICES=0 python finetune.py \
   --learning_rate 3e-4 \
   --cutoff_len 256 \
   --val_set_size 120 \
+  --eval_step 16 \
   --save_step 16 \
   --use_gradient_checkpointing \
   --adapter_name lora
