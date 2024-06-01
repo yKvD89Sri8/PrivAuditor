@@ -4,6 +4,7 @@ import torch
 import transformers
 from peft import PeftModel
 from transformers import GenerationConfig, LlamaForCausalLM, LlamaTokenizer
+import os
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -20,13 +21,17 @@ except:  # noqa: E722
 def main(
     load_8bit: bool = False,
     base_model: str = "",
-    lora_weights: str = "tloen/alpaca-lora-7b"
+    lora_weights: str = "tloen/alpaca-lora-7b",
+    output_dir: str = "full_model", 
 ):
+    
     assert (
         base_model
     ), "Please specify a --base_model, e.g. --base_model='decapoda-research/llama-7b-hf'"
+    
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
-    tokenizer = LlamaTokenizer.from_pretrained(base_model)
     if device == "cuda":
         model = LlamaForCausalLM.from_pretrained(
             base_model,
@@ -64,5 +69,6 @@ def main(
 
     print("save full model to disk")
     fullmodel = model.merge_and_unload(progressbar=True, safe_merge=True)
+    fullmodel.save_pretrained(output_dir)
 if __name__ == "__main__":
     fire.Fire(main)
