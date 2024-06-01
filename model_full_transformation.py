@@ -75,5 +75,7 @@ def main(
     print("save full model to disk")
     fullmodel = model.merge_and_unload(progressbar=True, safe_merge=True)
     fullmodel.save_pretrained(output_dir)
+    tokenizer.save_pretrained(output_dir)
+    
 if __name__ == "__main__":
     fire.Fire(main)
