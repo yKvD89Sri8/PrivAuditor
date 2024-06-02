@@ -174,7 +174,7 @@ class Model(nn.Module):
             raise ValueError("Please set self.device and self.name in child class")
 
         if self.config.openai_config is None:
-            print(f'Loading BASE model {self.name}...')
+            print(f'Loading BASE model {self.name}...load_8bit={load_8bit}')
             device_map = self.device_map # if self.device_map else 'cpu'
             if "silo" in self.name or "balanced" in self.name:
                 from utils.transformers.model import OpenLMforCausalLM
@@ -186,14 +186,14 @@ class Model(nn.Module):
                 # llama is too big, gotta use device map
                 #model = transformers.AutoModelForCausalLM.from_pretrained(self.name, **model_kwargs, device_map="balanced_low_0", cache_dir=self.cache_dir)
                 #self.device = 'cuda:1'
-                model = LlamaForCausalLM.from_pretrained(base_model,**model_kwargs, device_map="balanced_low_0", cache_dir=self.cache_dir, load_in_8bit=load_8bit,torch_dtype=torch.float16,device_map="auto",trust_remote_code=True,)
+                model = LlamaForCausalLM.from_pretrained(base_model,**model_kwargs, device_map=self.device, cache_dir=self.cache_dir, load_in_8bit=load_8bit,torch_dtype=torch.float16,trust_remote_code=True,)
                 model = PeftModel.from_pretrained(
                     model,
                     lora_weights,
                     torch_dtype=torch.float16,
-                    device_map="balanced_low_0", cache_dir=self.cache_dir
+                    device_map=self.device, cache_dir=self.cache_dir
                 )
-                self.device = 'cuda:1'
+                #self.device = 'cuda:1'
             elif "stablelm" in self.name.lower():  # models requiring custom code
                 model = transformers.AutoModelForCausalLM.from_pretrained(
                     self.name, **model_kwargs, trust_remote_code=True, device_map=device_map, cache_dir=self.cache_dir)

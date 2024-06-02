@@ -1,3 +1,5 @@
+# Ignore the text log file
+*.txt
 # Igonore the local
 local
 # Ignore all caching folders
