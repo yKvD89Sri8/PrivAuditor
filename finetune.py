@@ -298,7 +298,8 @@ def train(
             group_by_length=group_by_length,
             report_to="wandb" if use_wandb else None,
             run_name=wandb_run_name if use_wandb else None,
-            disable_tqdm=True, # disable the training progress bar, added by derui
+            disable_tqdm=True, # disable the training progress bar, added by derui,
+            save_safetensors=False,
         ),
         data_collator=transformers.DataCollatorForSeq2Seq(
             tokenizer, pad_to_multiple_of=8, return_tensors="pt", padding=True
@@ -319,7 +320,7 @@ def train(
 
     trainer.train(resume_from_checkpoint=resume_from_checkpoint)
 
-    model.save_pretrained(output_dir)
+    model.save_pretrained(output_dir,save_safetensors=False)
 
     print(
         "\n If there's a warning about missing keys above, please disregard :)"

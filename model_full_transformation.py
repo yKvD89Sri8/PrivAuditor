@@ -73,6 +73,7 @@ def main(
         )
 
     print("save full model to disk")
+    print("type of model = {}".format(type(model)))
     fullmodel = model.merge_and_unload(progressbar=True, safe_merge=True)
     fullmodel.save_pretrained(output_dir)
     tokenizer.save_pretrained(output_dir)
