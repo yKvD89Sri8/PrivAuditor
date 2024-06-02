@@ -19,6 +19,7 @@ from peft import (  # noqa: E402
 #    BottleneckConfig,
     PrefixTuningConfig,
     PromptTuningConfig,
+    PromptEncoderConfig,
     PromptTuningInit,
     TaskType,
     get_peft_model,
@@ -233,6 +234,10 @@ def train(
             num_virtual_tokens=8,
             prompt_tuning_init_text="Comple the following task:\n\n",
             tokenizer_name_or_path=base_model)
+    elif adapter_name == "p-tuning":
+        config = PromptEncoderConfig(task_type=TaskType.CAUSAL_LM, 
+                                     num_virtual_tokens=20, 
+                                     encoder_hidden_size=128)
         
     model = get_peft_model(model, config)
     if adapter_name == "prefix-tuning" or adapter_name == "prompt-tuning":
