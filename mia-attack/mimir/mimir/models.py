@@ -192,6 +192,7 @@ class Model(nn.Module):
                     lora_weights,
                     torch_dtype=torch.float16,
                 )
+                self.device = 'cuda:1'
             elif "stablelm" in self.name.lower():  # models requiring custom code
                 model = transformers.AutoModelForCausalLM.from_pretrained(
                     self.name, **model_kwargs, trust_remote_code=True, device_map=device_map, cache_dir=self.cache_dir)
