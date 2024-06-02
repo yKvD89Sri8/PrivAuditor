@@ -231,7 +231,8 @@ def train(
             task_type=TaskType.CAUSAL_LM,
             prompt_tuning_init=PromptTuningInit.TEXT,
             num_virtual_tokens=8,
-            prompt_tuning_init_text="Follow the following instruction to give a correct answer:")
+            prompt_tuning_init_text="Comple the following task:\n\n",
+            tokenizer_name_or_path=base_model)
         
     model = get_peft_model(model, config)
     if adapter_name == "prefix-tuning" or adapter_name == "prompt-tuning":
