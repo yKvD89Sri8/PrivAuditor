@@ -203,6 +203,14 @@ class Model(nn.Module):
             else:
                 model = transformers.AutoModelForCausalLM.from_pretrained(
                     self.name, **model_kwargs, device_map=device_map, cache_dir=self.cache_dir)
+                if lora_weights is not None:
+                    model = PeftModel.from_pretrained(
+                        model,
+                        lora_weights,
+                        torch_dtype=torch.float16,
+                        device_map=self.device, cache_dir=self.cache_dir
+                    )
+                    print("*********loading the peft model************")
         else:
             model = None
 
