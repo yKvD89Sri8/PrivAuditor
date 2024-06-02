@@ -200,6 +200,11 @@ class ExperimentConfig(Serializable):
     """Environment config"""
     openai_config: Optional[OpenAIConfig] = None
     """OpenAI config"""
+    load_8bit: Optional[bool] = True
+    """load_8bit setup"""
+    lora_weights: Optional[str] = None
+    """lora_weights setup"""
+    
 
     def __post_init__(self):
         if self.dump_cache and (self.load_from_cache or self.load_from_hf):
