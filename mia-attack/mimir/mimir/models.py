@@ -17,6 +17,9 @@ from hf_olmo import *
 from mimir.config import ExperimentConfig
 from mimir.custom_datasets import SEPARATOR
 from mimir.data_utils import drop_last_word
+import sys 
+from peft import PeftModel, get_peft_model
+from transformers import GenerationConfig, LlamaForCausalLM, LlamaTokenizer
 
 
 class Model(nn.Module):
@@ -162,6 +165,72 @@ class Model(nn.Module):
         all_prob = probs if probs is not None else self.get_probabilities(text, tokens=tokens)
         return -np.mean(all_prob)
 
+    # add the support for peft model loading
+    def load_base_model_and_tokenizer_derui(self, base_model,load_8bit, lora_weights, model_kwargs):
+        """
+            Load the base model and tokenizer for a given model name.
+        """
+        if self.device is None or self.name is None:
+            raise ValueError("Please set self.device and self.name in child class")
+
+        if self.config.openai_config is None:
+            print(f'Loading BASE model {self.name}...')
+            device_map = self.device_map # if self.device_map else 'cpu'
+            if "silo" in self.name or "balanced" in self.name:
+                from utils.transformers.model import OpenLMforCausalLM
+                model = OpenLMforCausalLM.from_pretrained(
+                    self.name, **model_kwargs, device_map=self.device, cache_dir=self.cache_dir)
+                # Extract the model from the model wrapper so we dont need to call model.model
+            elif "llama" in self.name or "alpaca" in self.name:
+                # TODO: This should be smth specified in config in case user has
+                # llama is too big, gotta use device map
+                #model = transformers.AutoModelForCausalLM.from_pretrained(self.name, **model_kwargs, device_map="balanced_low_0", cache_dir=self.cache_dir)
+                #self.device = 'cuda:1'
+                model = LlamaForCausalLM.from_pretrained(base_model,load_in_8bit=load_8bit,torch_dtype=torch.float16,device_map="auto",trust_remote_code=True,)
+                model = PeftModel.from_pretrained(
+                    model,
+                    lora_weights,
+                    torch_dtype=torch.float16,
+                )
+            elif "stablelm" in self.name.lower():  # models requiring custom code
+                model = transformers.AutoModelForCausalLM.from_pretrained(
+                    self.name, **model_kwargs, trust_remote_code=True, device_map=device_map, cache_dir=self.cache_dir)
+            elif "olmo" in self.name.lower():
+                model = transformers.AutoModelForCausalLM.from_pretrained(
+                    self.name, **model_kwargs, trust_remote_code=True, cache_dir=self.cache_dir)
+            else:
+                model = transformers.AutoModelForCausalLM.from_pretrained(
+                    self.name, **model_kwargs, device_map=device_map, cache_dir=self.cache_dir)
+        else:
+            model = None
+
+        optional_tok_kwargs = {}
+        if "facebook/opt-" in self.name:
+            print("Using non-fast tokenizer for OPT")
+            optional_tok_kwargs['fast'] = False
+        if self.config.dataset_member in ['pubmed'] or self.config.dataset_nonmember in ['pubmed']:
+            optional_tok_kwargs['padding_side'] = 'left'
+            self.pad_token = self.tokenizer.eos_token_id
+        if "silo" in self.name or "balanced" in self.name:
+            tokenizer = transformers.GPTNeoXTokenizerFast.from_pretrained(
+                "EleutherAI/gpt-neox-20b", **optional_tok_kwargs, cache_dir=self.cache_dir)
+        elif "datablations" in self.name:
+            tokenizer = transformers.AutoTokenizer.from_pretrained(
+                "gpt2", **optional_tok_kwargs, cache_dir=self.cache_dir)
+        elif "llama" in self.name or "alpaca" in self.name:
+            tokenizer = transformers.LlamaTokenizer.from_pretrained(
+                self.name, **optional_tok_kwargs, cache_dir=self.cache_dir)
+        elif "pubmedgpt" in self.name:
+            tokenizer = transformers.AutoTokenizer.from_pretrained(
+                "stanford-crfm/BioMedLM", **optional_tok_kwargs, cache_dir=self.cache_dir)
+        else:
+            tokenizer = transformers.AutoTokenizer.from_pretrained(
+                self.name, **optional_tok_kwargs, cache_dir=self.cache_dir,
+                trust_remote_code=True if "olmo" in self.name.lower() else False)
+        tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+
+        return model, tokenizer
+    
     def load_base_model_and_tokenizer(self, model_kwargs):
         """
             Load the base model and tokenizer for a given model name.
@@ -314,8 +383,11 @@ class LanguageModel(Model):
             base_model_kwargs.update(dict(torch_dtype=torch.float16))
         if 'gpt-j' in self.name:
             base_model_kwargs.update(dict(revision='float16'))
-        self.model, self.tokenizer = self.load_base_model_and_tokenizer(
-            model_kwargs=base_model_kwargs)
+        #self.model, self.tokenizer = self.load_base_model_and_tokenizer(model_kwargs=base_model_kwargs)
+        self.model, self.tokenizer = self.load_base_model_and_tokenizer_derui(self.config.base_model, 
+                                                                              self.config.load_8bit, 
+                                                                              self.config.lora_weights, 
+                                                                              model_kwargs=base_model_kwargs)
         self.load_model_properties()
 
     @torch.no_grad()

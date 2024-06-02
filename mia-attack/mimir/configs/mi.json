@@ -1,6 +1,8 @@
 {
-    "experiment_name": "syntatic_data_experiment",
-    "base_model": "/home/stud/bcui/bhome/Documents/projects/llm_finetuning_privacy_benchmark/trained_models/full_model",
+    "experiment_name": "syntatic_data_peft_experiment",
+    "load_8bit": true,
+    "base_model": "yahma/llama-7b-hf",
+    "lora_weights": "/home/stud/bcui/bhome/Documents/projects/llm_finetuning_privacy_benchmark/trained_models/llama7b-text2sql",
     "dataset_member": "/home/stud/bcui/bhome/Documents/projects/llm_finetuning_privacy_benchmark/dataset/syntatic_text_to_sql/train.json",
     "dataset_nonmember": "/home/stud/bcui/bhome/Documents/projects/llm_finetuning_privacy_benchmark/dataset/syntatic_text_to_sql/val.json",
     "dataset_key": "output",
