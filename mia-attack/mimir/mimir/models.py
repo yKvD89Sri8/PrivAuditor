@@ -186,11 +186,12 @@ class Model(nn.Module):
                 # llama is too big, gotta use device map
                 #model = transformers.AutoModelForCausalLM.from_pretrained(self.name, **model_kwargs, device_map="balanced_low_0", cache_dir=self.cache_dir)
                 #self.device = 'cuda:1'
-                model = LlamaForCausalLM.from_pretrained(base_model,load_in_8bit=load_8bit,torch_dtype=torch.float16,device_map="auto",trust_remote_code=True,)
+                model = LlamaForCausalLM.from_pretrained(base_model,**model_kwargs, device_map="balanced_low_0", cache_dir=self.cache_dir, load_in_8bit=load_8bit,torch_dtype=torch.float16,device_map="auto",trust_remote_code=True,)
                 model = PeftModel.from_pretrained(
                     model,
                     lora_weights,
                     torch_dtype=torch.float16,
+                    device_map="balanced_low_0", cache_dir=self.cache_dir
                 )
                 self.device = 'cuda:1'
             elif "stablelm" in self.name.lower():  # models requiring custom code
