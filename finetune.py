@@ -18,6 +18,9 @@ from peft import (  # noqa: E402
     LoraConfig,
 #    BottleneckConfig,
     PrefixTuningConfig,
+    PromptTuningConfig,
+    PromptTuningInit,
+    TaskType,
     get_peft_model,
     get_peft_model_state_dict,
 #    prepare_model_for_kbit_training,
@@ -206,7 +209,7 @@ def train(
             task_type="CAUSAL_LM",
         )
     elif adapter_name == "bottleneck":
-        config = BottleneckConfig(
+        """config = BottleneckConfig(
             bottleneck_size=bottleneck_size,
             non_linearity=non_linearity,
             adapter_dropout=adapter_dropout,
@@ -216,14 +219,22 @@ def train(
             scaling=scaling,
             bias="none",
             task_type="CAUSAL_LM",
-        )
+        )"""
+        sys.exit("Bottleneck adapter is not supported in this version")
     elif adapter_name == "prefix-tuning":
         config = PrefixTuningConfig(
             num_virtual_tokens=num_virtual_tokens,
             task_type="CAUSAL_LM",
         )
+    elif adapter_name == "prompt-tuning":
+        config = PromptTuningConfig(
+            task_type=TaskType.CAUSAL_LM,
+            prompt_tuning_init=PromptTuningInit.TEXT,
+            num_virtual_tokens=8,
+            prompt_tuning_init_text="Follow the following instruction to give a correct answer:")
+        
     model = get_peft_model(model, config)
-    if adapter_name == "prefix-tuning":
+    if adapter_name == "prefix-tuning" or adapter_name == "prompt-tuning":
         model.to('cuda')
 
     if data_path.endswith(".json"):  # todo: support jsonl
