@@ -283,17 +283,24 @@ def compute_metrics_from_scores(
         preds_member_ = preds_member[attack]
         preds_nonmember_ = preds_nonmember[attack]
 
+        
         if len(preds_member_) != len(preds_nonmember_) or len(preds_member_)==0:
             print(f"Skipping {attack} due to mismatched number of predictions")
             print("****preds_member_:{}".format(preds_member_))
             print("preds_nonmember_:{}".format(preds_nonmember_))
             continue
-        fpr, tpr, roc_auc, roc_auc_res, thresholds = get_roc_metrics(
-            preds_member=preds_member_,
-            preds_nonmember=preds_nonmember_,
-            perform_bootstrap=True,
-            return_thresholds=True,
-        )
+        try:
+            fpr, tpr, roc_auc, roc_auc_res, thresholds = get_roc_metrics(
+                preds_member=preds_member_,
+                preds_nonmember=preds_nonmember_,
+                perform_bootstrap=True,
+                return_thresholds=True,
+            )
+        except Exception as e:
+            print("*** error happend in get_roc_metrics")
+            print("***preds_member_ is {}".format(preds_member_))
+            print("***preds_nonmember_ is {}".format(preds_nonmember_))
+            continue
         tpr_at_low_fpr = {
             upper_bound: tpr[np.where(np.array(fpr) < upper_bound)[0][-1]]
             for upper_bound in config.fpr_list
