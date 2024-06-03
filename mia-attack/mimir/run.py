@@ -283,6 +283,11 @@ def compute_metrics_from_scores(
         preds_member_ = preds_member[attack]
         preds_nonmember_ = preds_nonmember[attack]
 
+        if len(preds_member_) != len(preds_nonmember_) or len(preds_member_)==0:
+            print(f"Skipping {attack} due to mismatched number of predictions")
+            print("****preds_member_:{}".format(preds_member_))
+            print("preds_nonmember_:{}".format(preds_nonmember_))
+            continue
         fpr, tpr, roc_auc, roc_auc_res, thresholds = get_roc_metrics(
             preds_member=preds_member_,
             preds_nonmember=preds_nonmember_,
