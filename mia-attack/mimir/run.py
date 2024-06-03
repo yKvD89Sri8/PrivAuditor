@@ -443,7 +443,10 @@ def generate_data_derui(
         for one_data_point in ds:
             #data.append(one_data_point[dataset_key])
             #data.append(one_data_point["input"]+"\n\n"+one_data_point["output"])
-            data.append(one_data_point["instruction"]+"\n\n"+one_data_point["input"]+"\n\n"+one_data_point["output"])
+            text = one_data_point["input"]+"\n\n"+one_data_point["output"]
+            print("===in get data, text = {}".format(text))
+            print("===one_data_point = {}".format(one_data_point))
+            data.append(text)
     
     """data = data_obj.load(
         train=train,
