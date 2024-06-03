@@ -429,7 +429,9 @@ def generate_data_derui(
     with open(dataset_with_path, "r") as f:
         ds = json.load(f)
         for one_data_point in ds:
-            data.append(one_data_point[dataset_key])
+            #data.append(one_data_point[dataset_key])
+            #data.append(one_data_point["input"]+"\n\n"+one_data_point["output"])
+            data.append(one_data_point["instruction"]+"\n\n"+one_data_point["input"]+"\n\n"+one_data_point["output"])
     
     """data = data_obj.load(
         train=train,
