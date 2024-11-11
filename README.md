@@ -147,14 +147,14 @@ CUDA_VISIBLE_DEVICES=0 python evaluate.py
 
 <!-- ## Resource Consumption
 
-There is a table of resouce needed for different adapters, which contains Trainable Parameters, GPU RAM Usage, and Fine-tuning Time on the Arithmetic Reasoning dataset `math_10k.json`
+There is a table of resource needed for different adapters, which contains Trainable Parameters, GPU RAM Usage, and Fine-tuning Time on the Arithmetic Reasoning dataset `math_10k.json`
 
 Hyper-parameter setting: num_epochs=3, lora_r=8, lora_alpha=16, bottleneck_size=256
 
 Models: LLaMA-13B, LLaMA-7B, BLOOM-6.7B, GPT-j-6B
 Dataset: 3.2K math word problems
 
-Hardware: 2*3090 GPUs
+Hardware: A100 GPUs
 
 | Model                 | Trainable Parameters | GPU RAM Usage | Fine-tuning Time |
 |-----------------------|----------------------|---------------|------------------|
@@ -173,17 +173,9 @@ This metrix shows whether different models can use LoRA,AdapterH,AdapterP,Parall
 | BLOOM        | ✅     | ✅     | ✅        |✅     | ✅     | ✅     | ✅     | 
 | GPT-J        | ✅     | ✅     | ✅        |✅     | ✅     | ✅     | ✅     |
 | OPT          | ✅     | ✅     | ✅        |✅     | ✅     | ✅     | ✅     |
-| GPT-2        | ✅     | 🔧Developing | 🔧Developing|🔧Developing | ✅     | ✅     | ✅     | 
 | GPT-Neo      | ✅     | ✅     | ✅        | ✅    | ✅     | ✅     | ✅     | 
-| GPT-NeoX-20B | ✅     | 🔧Developing | 🔧Developing|🔧Developing | ✅     | ✅     | ✅     |
-| ChatGLM      | ✅     | ✅     | ✅        |✅     | ✅     | ✅     | ✅     | 
+| T5      | ✅     | ✅     | ✅        |✅     | ✅     | ✅     | ✅     | 
 
-
-### TODO List
-- [x] Add Fine-tuning Approach: AdapterH
-- [x] Add Fine-tuning Approach: AdapterP
-- [x] Add Fine-tuning Approach: Parallel Adapter
-- [ ] Support MIAs 
 
 
 ## Acknowledgement
