@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
+<h1 align="center"> 
 <p> PrivAuditor</p>
 </h1>
 
 <h3 align="center">
-    <p>LLM-LeakageAuditor: A Privacy Assessment on a Family of Parameter-Efficient Fine-Tuning for Large Language Models </p>
+    <p>PrivAuditor: Benchmarking Privacy Vulnerabilities in LLM Adaptation Techniques </p>
 </h3>
 LLM-LeakageAuditor is an easy-to-use framework that integrates various adapters into LLMs and can execute adapter-based PEFT methods of LLMs for different tasks and asssess the privacy leakage risk.
 
@@ -146,4 +146,4 @@ CUDA_VISIBLE_DEVICES=0 python evaluate.py
 
 ## Acknowledgement
 
-This repo benefits from [PEFT](https://github.com/huggingface/peft), [Adapter-Transformer](https://github.com/adapter-hub/adapter-transformers), [Alpaca-lora](https://github.com/tloen/alpaca-lora), [LLM-Adapter](https://github.com/AGI-Edgerunners/LLM-Adapters). Thanks for their wonderful works. Additionally, we thank DONG Shan and [dream.ai](https://dream.ai/create) for the exceptional logo design, which has added immense value to our project. 
+This repo benefits from [PEFT](https://github.com/huggingface/peft), [Adapter-Transformer](https://github.com/adapter-hub/adapter-transformers), [Alpaca-lora](https://github.com/tloen/alpaca-lora), [LLM-Adapter](https://github.com/AGI-Edgerunners/LLM-Adapters), [MIMIR](https://iamgroot42.github.io/mimir.github.io/). Thanks for their wonderful works. 
