@@ -69,7 +69,7 @@ If you would like to submit your attack to the repository, please open a pull re
 
 ## Citation
 
-If you use MIMIR in your research, please cite our paper:
+If you use MIMIR in your research as well, please cite the paper:
 
 ```bibtex
 @article{duan2024membership,
