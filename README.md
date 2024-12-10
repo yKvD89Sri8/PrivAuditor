@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h1 align="center"> 
-<img src="picture.jpg" width="73" height="114">
 <p> PrivAuditor</p>
 </h1>
 
