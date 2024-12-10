@@ -16,7 +16,7 @@ limitations under the License.
 
 <h1 align="center"> 
 <img src="picture.jpg" width="73" height="114">
-<p> LLM-LeakageAuditor</p>
+<p> PrivAuditor</p>
 </h1>
 
 <h3 align="center">
@@ -144,38 +144,6 @@ CUDA_VISIBLE_DEVICES=0 python evaluate.py
     --base_model 'yahma/llama-7b-hf' \
     --lora_weights './trained_models/llama-lora'
 ```
-
-<!-- ## Resource Consumption
-
-There is a table of resource needed for different adapters, which contains Trainable Parameters, GPU RAM Usage, and Fine-tuning Time on the Arithmetic Reasoning dataset `math_10k.json`
-
-Hyper-parameter setting: num_epochs=3, lora_r=8, lora_alpha=16, bottleneck_size=256
-
-Models: LLaMA-13B, LLaMA-7B, BLOOM-6.7B, GPT-j-6B
-Dataset: 3.2K math word problems
-
-Hardware: A100 GPUs
-
-| Model                 | Trainable Parameters | GPU RAM Usage | Fine-tuning Time |
-|-----------------------|----------------------|---------------|------------------|
-| LLaMA-7B-LoRA         | 4.2M                 | 18GB          |     4h           | 
-| LLaMA-7B-AdapterH     | 200M                 | 22GB          |     4h           | 
-| LLaMA-7B-AdapterP     | 200M                 | 22GB          |     4h           | 
-| LLaMA-7B-Parallel     | 200M                 | 22GB          |     4h           |  -->
-
-
-### PrivacyAuditor support matrix
-This metrix shows whether different models can use LoRA,AdapterH,AdapterP,Parallel and Scaled Parallel adapters.
-
-| Adapter      | LoRA | AdapterH | AdapterP | Parallel| Prefix Tuning	|P-Tuning|Prompt Tuning|
-|--------------|-------|-------|----------|-------|-------|-------|-------|
-| LLaMA        | ✅     | ✅     | ✅        |✅     | ✅     | ✅     | ✅     |
-| BLOOM        | ✅     | ✅     | ✅        |✅     | ✅     | ✅     | ✅     | 
-| GPT-J        | ✅     | ✅     | ✅        |✅     | ✅     | ✅     | ✅     |
-| OPT          | ✅     | ✅     | ✅        |✅     | ✅     | ✅     | ✅     |
-| GPT-Neo      | ✅     | ✅     | ✅        | ✅    | ✅     | ✅     | ✅     | 
-| T5      | ✅     | ✅     | ✅        |✅     | ✅     | ✅     | ✅     | 
-
 
 
 ## Acknowledgement
