@@ -20,7 +20,7 @@ limitations under the License.
 <h3 align="center">
     <p>PrivAuditor: Benchmarking Privacy Vulnerabilities in LLM Adaptation Techniques </p>
 </h3>
-LLM-LeakageAuditor is an easy-to-use framework that integrates various adapters into LLMs and can execute adapter-based PEFT methods of LLMs for different tasks and asssess the privacy leakage risk.
+PrivAuditor is an easy-to-use framework that integrates various adapters into LLMs and can execute adapter-based PEFT methods of LLMs for different tasks and asssess the privacy leakage risk.
 
 The framework includes state-of-the-art open-access LLMs: LLaMa, OPT, BLOOM, and GPT-J, as well as widely used adapters such as Bottleneck adapters, Parallel adapters, and LoRA.
 
